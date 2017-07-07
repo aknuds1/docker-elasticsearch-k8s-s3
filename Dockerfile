@@ -44,8 +44,8 @@ COPY run.sh /
 RUN useradd --no-create-home --user-group elasticsearch \
     && mkdir /data \
     && chown -R elasticsearch:elasticsearch /elasticsearch
-RUN ls /elasticsearch
-RUN ls /elasticsearch/bin/
+RUN ls /elasticsearch/bin/elasticsearch-plugin 
+RUN chmod +x /elasticsearch/bin/elasticsearch-plugin 
 RUN /elasticsearch/bin/elasticsearch-plugin install repository-s3
 
 VOLUME ["/data"]
