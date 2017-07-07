@@ -39,8 +39,9 @@ RUN set -x \
     && rm elasticsearch-$ELASTICSEARCH_VERSION.tar.gz
 
 COPY elasticsearch_logging_discovery.go /
-RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-w" /elasticsearch_logging_discovery.go \
--o elasticsearch_logging_discovery
+RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-w" -o elasticsearch_logging_discovery \
+/elasticsearch_logging_discovery.go
+
 RUN rm elasticsearch_logging_discovery.go
 RUN apk del go
 
