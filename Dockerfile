@@ -39,6 +39,8 @@ RUN set -x \
     && rm elasticsearch-$ELASTICSEARCH_VERSION.tar.gz
 
 COPY elasticsearch_logging_discovery.go /
+RUN go get github.com/golang/glog k8s.io/client-go/rest k8s.io/apimachinery/pkg/apis/meta/v1 \
+k8s.io/client-go/tools/clientcmd/api k8s.io/client-go/tools/clientcmd
 RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-w" -o elasticsearch_logging_discovery \
 /elasticsearch_logging_discovery.go
 
