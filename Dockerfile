@@ -28,7 +28,6 @@ RUN apk update && \
         curl \
         shadow \
         tar \
-        go \
         gosu
 
 RUN set -x \
@@ -38,19 +37,9 @@ RUN set -x \
     && tar xf elasticsearch-$ELASTICSEARCH_VERSION.tar.gz -C /elasticsearch --strip-components=1 \
     && rm elasticsearch-$ELASTICSEARCH_VERSION.tar.gz
 
-COPY elasticsearch_logging_discovery.go /
-RUN go get github.com/golang/glog k8s.io/client-go/rest k8s.io/apimachinery/pkg/apis/meta/v1 \
-k8s.io/client-go/tools/clientcmd/api k8s.io/client-go/tools/clientcmd
-RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-w" -o elasticsearch_logging_discovery \
-/elasticsearch_logging_discovery.go
-
-RUN rm elasticsearch_logging_discovery.go
-RUN apk del go
-
+COPY bin/elasticsearch_logging_discovery /
 COPY config /elasticsearch/config
-
 COPY run.sh /
-COPY elasticsearch_logging_discovery /
 
 RUN useradd --no-create-home --user-group elasticsearch \
     && mkdir /data \
