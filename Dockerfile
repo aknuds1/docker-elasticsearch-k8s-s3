@@ -37,6 +37,10 @@ RUN set -x \
     && tar xf elasticsearch-$ELASTICSEARCH_VERSION.tar.gz -C /elasticsearch --strip-components=1 \
     && rm elasticsearch-$ELASTICSEARCH_VERSION.tar.gz
 
+COPY elasticsearch_logging_discovery.go /
+RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-w" /elasticsearch_logging_discovery.go
+RUN rm elasticsearch_logging_discovery.go
+
 COPY config /elasticsearch/config
 
 COPY run.sh /
