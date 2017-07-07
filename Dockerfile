@@ -28,7 +28,8 @@ RUN apk update && \
         curl \
         shadow \
         tar \
-        gosu
+        gosu \
+        bash
 
 RUN set -x \
     && cd / \
@@ -44,8 +45,6 @@ COPY run.sh /
 RUN useradd --no-create-home --user-group elasticsearch \
     && mkdir /data \
     && chown -R elasticsearch:elasticsearch /elasticsearch
-RUN ls /elasticsearch/bin/elasticsearch-plugin 
-RUN chmod +x /elasticsearch/bin/elasticsearch-plugin 
 RUN /elasticsearch/bin/elasticsearch-plugin install repository-s3
 
 VOLUME ["/data"]
