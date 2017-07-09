@@ -4,4 +4,4 @@ export HTTP_PORT=9200
 export TRANSPORT_PORT=9300
 export NODE_DATA=true
 export NODE_MASTER=true
-gosu elasticsearch /elasticsearch/bin/elasticsearch-plugin install repository-s3
+gosu elasticsearch /elasticsearch/bin/elasticsearch-plugin install -b repository-s3
