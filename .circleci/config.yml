@@ -19,4 +19,4 @@ jobs:
           docker tag aknudsen/elasticsearch-k8s-s3:$CIRCLE_SHA1 aknudsen/elasticsearch-k8s-s3:5.5.0-1
           docker push aknudsen/elasticsearch-k8s-s3:$CIRCLE_SHA1
           docker push aknudsen/elasticsearch-k8s-s3:latest
-          docker push aknudsen/elasticsearch-k8s-s3:$5.5.0-1
+          docker push aknudsen/elasticsearch-k8s-s3:5.5.0-1
