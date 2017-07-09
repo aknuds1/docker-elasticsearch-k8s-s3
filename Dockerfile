@@ -1,52 +1,21 @@
-# This Dockerfile was generated from templates/Dockerfile.j2
+FROM docker.elastic.co/elasticsearch/elasticsearch:5.5.0
 
-FROM centos:7
-LABEL maintainer "Elastic Docker Team <docker@elastic.co>"
-
-ENV ELASTIC_CONTAINER true
-ENV PATH /usr/share/elasticsearch/bin:$PATH
-ENV JAVA_HOME /usr/lib/jvm/jre-1.8.0-openjdk
-
-RUN yum update -y && yum install -y java-1.8.0-openjdk-headless wget which && yum clean all
-
-RUN groupadd -g 1000 elasticsearch && adduser -u 1000 -g 1000 -d /usr/share/elasticsearch elasticsearch
+USER root
+RUN mkdir /data
+RUN chown -R elasticsearch:elasticsearch /data
 
 WORKDIR /usr/share/elasticsearch
 
-# Download and extract defined ES version. busybox tar can't strip leading dir.
-RUN wget --progress=bar:force https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.5.0.tar.gz && \
-    tar zxf elasticsearch-5.5.0.tar.gz && \
-    chown -R elasticsearch:elasticsearch elasticsearch-5.5.0 && \
-    mv elasticsearch-5.5.0/* . && \
-    rmdir elasticsearch-5.5.0 && \
-    rm elasticsearch-5.5.0.tar.gz
-
-RUN set -ex && for esdirs in config data logs; do \
-        mkdir -p "$esdirs"; \
-        chown -R elasticsearch:elasticsearch "$esdirs"; \
-    done
-
 USER elasticsearch
+RUN mv config config.bak
+RUN ./bin/elasticsearch-plugin install -b repository-s3
+RUN mv config.bak config
+COPY bin/elasticsearch_logging_discovery bin/
+COPY config/elasticsearch.yml config/
+COPY config/log4j2.properties config/
+COPY run.sh bin/
 
-# Install x-pack and also the ingest-{agent,geoip} modules required for Filebeat
-RUN for PLUGIN in x-pack ingest-user-agent ingest-geoip ; do \
-      elasticsearch-plugin install --batch "$PLUGIN"; \
-    done
-RUN elasticsearch-plugin install --batch repository-s3
-COPY elasticsearch.yml log4j2.properties config/
-COPY x-pack/log4j2.properties config/x-pack/
-COPY bin/es-docker bin/es-docker
-
-USER root
-RUN chown elasticsearch:elasticsearch \
-      config/elasticsearch.yml \
-      config/log4j2.properties \
-      config/x-pack/log4j2.properties \
-      bin/es-docker && \
-    chmod 0750 bin/es-docker
-
-USER elasticsearch
-CMD ["/bin/bash", "bin/es-docker"]
-
+VOLUME ["/data"]
 EXPOSE 9200 9300
 
+CMD ["bin/run.sh"]
