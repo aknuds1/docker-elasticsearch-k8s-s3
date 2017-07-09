@@ -1,5 +1,7 @@
 FROM docker.elastic.co/elasticsearch/elasticsearch:5.5.0
 
+RUN echo $ELASTIC_CONTAINER $JAVA_HOME
+
 USER root
 RUN mkdir /data
 RUN chown -R elasticsearch:elasticsearch /data
