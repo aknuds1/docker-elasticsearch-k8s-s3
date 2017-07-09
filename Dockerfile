@@ -7,9 +7,10 @@ RUN chown -R elasticsearch:elasticsearch /data
 WORKDIR /usr/share/elasticsearch
 
 USER elasticsearch
-RUN mv config config.bak
-RUN ./bin/elasticsearch-plugin install -b repository-s3
-RUN mv config.bak config
+# Temporarily move config out of the way before installing plugin as installation will fail
+# otherwise
+RUN mv config config.bak && ./bin/elasticsearch-plugin install -b repository-s3 && \
+mv config.bak config
 COPY bin/elasticsearch_logging_discovery bin/
 COPY config/elasticsearch.yml config/
 COPY config/log4j2.properties config/
