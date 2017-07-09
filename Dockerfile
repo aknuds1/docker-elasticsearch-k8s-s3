@@ -32,7 +32,7 @@ USER elasticsearch
 RUN for PLUGIN in x-pack ingest-user-agent ingest-geoip ; do \
       elasticsearch-plugin install --batch "$PLUGIN"; \
     done
-elasticsearch-plugin install --batch repository-s3
+RUN elasticsearch-plugin install --batch repository-s3
 COPY elasticsearch.yml log4j2.properties config/
 COPY x-pack/log4j2.properties config/x-pack/
 COPY bin/es-docker bin/es-docker
