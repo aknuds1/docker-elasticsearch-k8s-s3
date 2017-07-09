@@ -41,10 +41,12 @@ RUN set -x \
 COPY bin/elasticsearch_logging_discovery /
 COPY config /elasticsearch/config
 COPY run.sh /
+COPY install-plugins.sh /
 
 RUN useradd --no-create-home --user-group elasticsearch \
     && mkdir /data \
     && chown -R elasticsearch:elasticsearch /elasticsearch
+RUN /install-plugins.sh
 
 VOLUME ["/data"]
 EXPOSE 9200 9300

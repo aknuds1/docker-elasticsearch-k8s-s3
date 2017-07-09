@@ -25,7 +25,6 @@ export MINIMUM_MASTER_NODES=${MINIMUM_MASTER_NODES:-2}
 
 /elasticsearch_logging_discovery >> /elasticsearch/config/elasticsearch.yml
 
-gosu elasticsearch /elasticsearch/bin/elasticsearch-plugin install repository-s3
 chown -R elasticsearch:elasticsearch /data
 
 exec gosu elasticsearch sh /elasticsearch/bin/elasticsearch
