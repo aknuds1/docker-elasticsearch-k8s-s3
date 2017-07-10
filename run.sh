@@ -8,4 +8,4 @@ export MINIMUM_MASTER_NODES=${MINIMUM_MASTER_NODES:-2}
 
 sysctl -w vm.max_map_count=262144
 ./bin/elasticsearch_logging_discovery >> ./config/elasticsearch.yml
-exec su - elasticsearch -c ./bin/es-docker
+exec gosu elasticsearch ./bin/es-docker
