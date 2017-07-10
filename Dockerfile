@@ -19,4 +19,5 @@ COPY run.sh bin/
 VOLUME ["/data"]
 EXPOSE 9200 9300
 
+USER root
 CMD ["bin/run.sh"]
