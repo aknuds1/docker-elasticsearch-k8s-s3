@@ -16,7 +16,7 @@ jobs:
         name: Push Docker image
         command: |
           docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD
-          docker tag aknudsen/elasticsearch-k8s-s3:$CIRCLE_SHA1 aknudsen/elasticsearch-k8s-s3:5.5.0-9
+          docker tag aknudsen/elasticsearch-k8s-s3:$CIRCLE_SHA1 aknudsen/elasticsearch-k8s-s3:5.5.0-10
           docker push aknudsen/elasticsearch-k8s-s3:$CIRCLE_SHA1
           docker push aknudsen/elasticsearch-k8s-s3:latest
-          docker push aknudsen/elasticsearch-k8s-s3:5.5.0-9
+          docker push aknudsen/elasticsearch-k8s-s3:5.5.0-10
