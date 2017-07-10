@@ -4,8 +4,6 @@ USER root
 RUN mkdir /data
 RUN chown -R elasticsearch:elasticsearch /data
 
-RUN yum update -y && yum install -y gosu && yum clean all
-
 WORKDIR /usr/share/elasticsearch
 
 USER elasticsearch
