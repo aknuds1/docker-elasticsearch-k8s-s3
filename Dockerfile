@@ -20,4 +20,5 @@ VOLUME ["/data"]
 EXPOSE 9200 9300
 
 USER root
+RUN chown -R elasticsearch:elasticsearch config
 CMD ["bin/run.sh"]
