@@ -6,6 +6,7 @@ export HTTP_PORT=${HTTP_PORT:-9200}
 export TRANSPORT_PORT=${TRANSPORT_PORT:-9300}
 export MINIMUM_MASTER_NODES=${MINIMUM_MASTER_NODES:-2}
 
-sysctl -w vm.max_map_count=262144
+chown -R elasticsearch:elasticsearch /data
+
 ./bin/elasticsearch_logging_discovery >> ./config/elasticsearch.yml
 exec gosu elasticsearch ./bin/es-docker
