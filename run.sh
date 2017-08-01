@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/bin/sh
+set -ex
+
 export NODE_NAME=${NODE_NAME:-${HOSTNAME}}
 export NODE_MASTER=${NODE_MASTER:-true}
 export NODE_DATA=${NODE_DATA:-true}
@@ -9,4 +11,4 @@ export MINIMUM_MASTER_NODES=${MINIMUM_MASTER_NODES:-2}
 chown -R elasticsearch:elasticsearch /data
 
 ./bin/elasticsearch_logging_discovery >> ./config/elasticsearch.yml
-exec gosu elasticsearch ./bin/es-docker
+exec su elasticsearch -c ./bin/es-docker
