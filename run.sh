@@ -7,6 +7,7 @@ export NODE_DATA=${NODE_DATA:-true}
 export HTTP_PORT=${HTTP_PORT:-9200}
 export TRANSPORT_PORT=${TRANSPORT_PORT:-9300}
 export MINIMUM_MASTER_NODES=${MINIMUM_MASTER_NODES:-2}
+export XPACK_SECURITY_ENABLED=${XPACK_SECURITY_ENABLED:-false}
 
 chown -R elasticsearch:elasticsearch /data
 
